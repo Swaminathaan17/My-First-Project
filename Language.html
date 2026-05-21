@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Language Learning</title>
+  <style>
+    :root {
+      --bg-light: #fff;
+      --text-light: #000;
+      --bg-dark: #121212;
+      --text-dark: #fff;
+      --primary: #4caf50;
+    }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+      overflow: hidden;
+    }
+
+    .animated-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 90% 70%, rgba(255, 177, 153, 0.3) 0%, transparent 50%);
+      animation: backgroundMove 20s ease-in-out infinite;
+    }
+
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 15s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) { 
+      left: 10%; 
+      animation-delay: 0s;
+      font-size: 60px;
+    }
+    .shape:nth-child(2) { 
+      left: 20%; 
+      animation-delay: 2s;
+      font-size: 80px;
+    }
+    .shape:nth-child(3) { 
+      left: 35%; 
+      animation-delay: 4s;
+      font-size: 50px;
+    }
+    .shape:nth-child(4) { 
+      left: 50%; 
+      animation-delay: 6s;
+      font-size: 70px;
+    }
+    .shape:nth-child(5) { 
+      left: 65%; 
+      animation-delay: 8s;
+      font-size: 55px;
+    }
+    .shape:nth-child(6) { 
+      left: 80%; 
+      animation-delay: 10s;
+      font-size: 65px;
+    }
+
+    @keyframes backgroundMove {
+      0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+      25% { transform: translate(-45%, -55%) rotate(90deg); }
+      50% { transform: translate(-55%, -45%) rotate(180deg); }
+      75% { transform: translate(-50%, -50%) rotate(270deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.1; }
+      90% { opacity: 0.1; }
+      50% { 
+        transform: translateY(-100px) rotate(180deg);
+        opacity: 0.2;
+      }
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark .animated-bg {
+      background: linear-gradient(45deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), #81c784);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      animation: titlePulse 2s ease-in-out infinite alternate;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes titlePulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      margin-top: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: containerFadeIn 1s ease-out;
+    }
+
+    body.dark .container {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes containerFadeIn {
+      0% { 
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .toggle-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      border: 2px solid var(--primary);
+      padding: 0.5rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+
+    .toggle-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark .toggle-container {
+      background: rgba(51, 51, 51, 0.9);
+    }
+
+    button {
+      padding: 0.8rem 1.5rem;
+      margin-top: 1rem;
+      background: linear-gradient(135deg, var(--primary), #81c784);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+
+    button:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    select {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border-radius: 15px;
+      border: 2px solid var(--primary);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+    }
+
+    select:focus {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+    }
+
+    body.dark select {
+      background: rgba(51, 51, 51, 0.9);
+      color: white;
+    }
+
+    .word {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: wordSlideIn 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .word:nth-child(odd) { animation-delay: 0.1s; }
+    .word:nth-child(even) { animation-delay: 0.2s; }
+
+    @keyframes wordSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .word:hover {
+      transform: translateX(10px) scale(1.02);
+      background: rgba(76, 175, 80, 0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark .word {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark .word:hover {
+      background: rgba(76, 175, 80, 0.3);
+    }
+
+    .quiz-section {
+      margin-top: 2rem;
+    }
+
+    .quiz-question {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border: 2px solid rgba(76, 175, 80, 0.3);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: questionPop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes questionPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    body.dark .quiz-question {
+      background: rgba(0, 0, 0, 0.2);
+      border-color: rgba(76, 175, 80, 0.5);
+    }
+
+    .quiz-options button {
+      display: block;
+      margin: 0.5rem 0;
+      width: 100%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .quiz-options button:hover {
+      transform: translateX(10px);
+    }
+
+    .correct {
+      background: linear-gradient(135deg, #c8e6c9, #a5d6a7) !important;
+      animation: correctPulse 0.6s ease-out;
+    }
+
+    .wrong {
+      background: linear-gradient(135deg, #ffcdd2, #ef9a9a) !important;
+      animation: wrongShake 0.6s ease-out;
+    }
+
+    @keyframes correctPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    #scoreBoard {
+      font-weight: bold;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(129, 199, 132, 0.2));
+      border-radius: 15px;
+      text-align: center;
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      animation: scoreBoardPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scoreBoardPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(76, 175, 80, 0.4); }
+      50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.6); }
+    }
+
+    #celebration {
+      margin-top: 2rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-align: center;
+      display: none;
+      animation: celebrationBounce 1s ease infinite alternate;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+      background-size: 400% 400%;
+      animation: celebrationBounce 1s ease infinite alternate, gradientShift 3s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes celebrationBounce {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.1) rotate(2deg); }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .login-section {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      margin: 2rem auto;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: loginFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes loginFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    body.dark .login-section {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .login-section input {
+      padding: 1rem;
+      margin: 0.5rem;
+      border-radius: 15px;
+      border: 2px solid var(--primary);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .login-section input:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+    }
+
+    body.dark .login-section input {
+      background: rgba(51, 51, 51, 0.9);
+      color: white;
+    }
+
+    #logoutBtn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: linear-gradient(135deg, #ff5722, #ff7043);
+      color: white;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+    }
+
+    #timer {
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #ff5722;
+      margin-top: 1rem;
+      text-align: center;
+      padding: 1rem;
+      background: linear-gradient(135deg, rgba(255, 87, 34, 0.1), rgba(255, 112, 67, 0.1));
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 87, 34, 0.3);
+      animation: timerPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes timerPulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 87, 34, 0.4);
+      }
+      50% { 
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(255, 87, 34, 0.6);
+      }
+    }
+
+    /* Smooth transitions for all elements */
+    * {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Scroll animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape">🌍</div>
+      <div class="shape">📚</div>
+      <div class="shape">🗣️</div>
+      <div class="shape">✨</div>
+      <div class="shape">🎯</div>
+      <div class="shape">🌟</div>
+    </div>
+  </div>
+
+  <header>
+    <h1>Learn a New Language</h1>
+  </header>
+  <div class="toggle-container">
+    <button onclick="toggleMode()">Toggle Mode</button>
+  </div>
+  <button id="logoutBtn" onclick="logout()">Logout</button>
+  <div class="login-section" id="loginSection">
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button onclick="login()">Login</button>
+  </div>
+  <div class="container" id="mainContent" style="display:none">
+    <label for="language">Choose a Language:</label>
+    <select id="language" onchange="displayLanguage()">
+      <option value="">--Select--</option>
+      <option value="english">English</option>
+      <option value="spanish">Spanish</option>
+      <option value="french">French</option>
+      <option value="tamil">Tamil</option>
+      <option value="hindi">Hindi</option>
+      <option value="russian">Russian</option>
+      <option value="arabic">Arabic</option>
+      <option value="german">German</option>
+    </select>
+    <div id="content"></div>
+    <div class="quiz-section" id="quizSection"></div>
+    <div id="timer"></div>
+    <div id="scoreBoard">Score: 0 / 0</div>
+    <div id="celebration">🎉 Congratulations! You finished the quiz! 🎉</div>
+  </div>
+  <script>
+    let currentUser = localStorage.getItem("user") || null;
+    const loginSection = document.getElementById("loginSection");
+    const mainContent = document.getElementById("mainContent");
+
+    if (currentUser) {
+      loginSection.style.display = "none";
+      mainContent.style.display = "block";
+    }
+
+    function login() {
+      const name = document.getElementById("username").value;
+      if (name.trim()) {
+        localStorage.setItem("user", name);
+        loginSection.style.display = "none";
+        mainContent.style.display = "block";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("user");
+      localStorage.removeItem("score");
+      localStorage.removeItem("total");
+      location.reload();
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function speak(text, lang) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = lang || 'en';
+      speechSynthesis.speak(utter);
+    }
+
+    function displayLanguage() {
+      const lang = document.getElementById("language").value;
+      const section = document.getElementById("content");
+      const quizDiv = document.getElementById("quizSection");
+      section.innerHTML = quizDiv.innerHTML = '';
+      score = total = 0;
+      document.getElementById("celebration").style.display = "none";
+      updateScore();
+      if (!lang || !data[lang]) return;
+      const info = data[lang];
+      section.innerHTML += `<h2>Alphabets</h2><p>${info.alphabets}</p>`;
+      section.innerHTML += `<h2>Basic Words</h2>`;
+      info.words.forEach(([en, local]) => {
+        section.innerHTML += `<div class="word">${en} - ${local} <button onclick="speak('${local}')">🔊</button></div>`;
+      });
+      generateQuiz(lang);
+    }
+
+    let score = parseInt(localStorage.getItem("score")) || 0;
+    let total = parseInt(localStorage.getItem("total")) || 0;
+    let questions = 2;
+    let timer;
+    let timeLeft = 30;
+
+    function generateQuiz(lang) {
+      const quiz = document.getElementById("quizSection");
+      const words = data[lang].words;
+      startTimer();
+      for (let i = 0; i < questions; i++) {
+        const correctIndex = Math.floor(Math.random() * words.length);
+        const options = [...words];
+        options.sort(() => 0.5 - Math.random());
+        const question = words[correctIndex];
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "quiz-question";
+        questionDiv.innerHTML = `<strong>What is the ${question[0]} in ${lang}?</strong>`;
+        const btnsDiv = document.createElement("div");
+        btnsDiv.className = "quiz-options";
+        options.slice(0, 4).forEach(opt => {
+          const btn = document.createElement("button");
+          btn.textContent = opt[1];
+          btn.onclick = () => {
+            total++;
+            if (opt[1] === question[1]) {
+              btn.classList.add("correct");
+              score++;
+              speak(`Correct! ${question[0]} in ${lang} is ${question[1]}`, lang);
+            } else {
+              btn.classList.add("wrong");
+              speak(`Wrong! The correct answer is ${question[1]}`, lang);
+            }
+            Array.from(btnsDiv.children).forEach(b => b.disabled = true);
+            updateScore();
+          };
+          btnsDiv.appendChild(btn);
+        });
+        questionDiv.appendChild(btnsDiv);
+        quiz.appendChild(questionDiv);
+      }
+    }
+
+    function updateScore() {
+      document.getElementById("scoreBoard").textContent = `Score: ${score} / ${total}`;
+      localStorage.setItem("score", score);
+      localStorage.setItem("total", total);
+      if (total === questions) {
+        document.getElementById("celebration").style.display = "block";
+        clearInterval(timer);
+      }
+    }
+
+    function startTimer() {
+      timeLeft = 30;
+      document.getElementById("timer").textContent = `⏱️ Time left: ${timeLeft}s`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = `⏱️ Time left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          document.getElementById("quizSection").innerHTML += '<p><strong>Time is up!</strong></p>';
+          Array.from(document.querySelectorAll(".quiz-options button")).forEach(b => b.disabled = true);
+        }
+      }, 1000);
+    }
+
+    const data = {
+      english: {
+        alphabets: "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+        words: [["Hello", "Hello"], ["Thank you", "Thank you"], ["Yes", "Yes"], ["No", "No"], ["Please", "Please"], ["Sorry", "Sorry"], ["Goodbye", "Goodbye"], ["Morning", "Morning"], ["Night", "Night"], ["Food", "Food"]]
+      },
+      spanish: {
+        alphabets: "A B C D E F G H I J K L LL M N Ñ O P Q R S T U V W X Y Z",
+        words: [["Hello", "Hola"], ["Thank you", "Gracias"], ["Yes", "Sí"], ["No", "No"], ["Please", "Por favor"], ["Sorry", "Lo siento"], ["Goodbye", "Adiós"], ["Morning", "Mañana"], ["Night", "Noche"], ["Food", "Comida"]]
+      },
+      french: {
+        alphabets: "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+        words: [["Hello", "Bonjour"], ["Thank you", "Merci"], ["Yes", "Oui"], ["No", "Non"], ["Please", "S'il vous plaît"], ["Sorry", "Pardon"], ["Goodbye", "Au revoir"], ["Morning", "Matin"], ["Night", "Nuit"], ["Food", "Nourriture"]]
+      },
+      tamil: {
+        alphabets: "அ ஆ இ ஈ உ ஊ எ ஏ ஐ ஒ ஓ ஔ ங ச ஜ ட ண த ந ப ம ய ர ல வ ழ ள ற ன",
+        words: [["Hello", "வணக்கம்"], ["Thank you", "நன்றி"], ["Yes", "ஆம்"], ["No", "இல்லை"], ["Please", "தயவு செய்து"], ["Sorry", "மன்னிக்கவும்"], ["Goodbye", "போய் வருகிறேன்"], ["Morning", "காலை"], ["Night", "இரவு"], ["Food", "உணவு"]]
+      },
+      hindi: {
+        alphabets: "अ आ इ ई उ ऊ ए ऐ ओ औ क ख ग घ च छ ज झ ट ठ ड ढ त थ द ध न प फ ब भ म य र ल व श ष स ह",
+        words: [["Hello", "नमस्ते"], ["Thank you", "धन्यवाद"], ["Yes", "हाँ"], ["No", "नहीं"], ["Please", "कृपया"], ["Sorry", "माफ़ कीजिए"], ["Goodbye", "अलविदा"], ["Morning", "सुबह"], ["Night", "रात"], ["Food", "भोजन"]]
+      },
+      russian: {
+        alphabets: "А Б В Г Д Е Ё Ж З И Й К Л М Н О П Р С Т У Ф Х Ц Ч Ш Щ Ъ Ы Ь Э Ю Я",
+        words: [["Hello", "Здравствуйте"], ["Thank you", "Спасибо"], ["Yes", "Да"], ["No", "Нет"], ["Please", "Пожалуйста"], ["Sorry", "Извините"], ["Goodbye", "До свидания"], ["Morning", "Утро"], ["Night", "Ночь"], ["Food", "Еда"]]
+      },
+      arabic: {
+        alphabets: "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي",
+        words: [["Hello", "مرحبا"], ["Thank you", "شكرا"], ["Yes", "نعم"], ["No", "لا"], ["Please", "من فضلك"], ["Sorry", "آسف"], ["Goodbye", "مع السلامة"], ["Morning", "صباح"], ["Night", "ليل"], ["Food", "طعام"]]
+      },
+      german: {
+        alphabets: "A Ä B C D E F G H I J K L M N O Ö P Q R S T U Ü V W X Y Z",
+        words: [["Hello", "Hallo"], ["Thank you", "Danke"], ["Yes", "Ja"], ["No", "Nein"], ["Please", "Bitte"], ["Sorry", "Entschuldigung"], ["Goodbye", "Auf Wiedersehen"], ["Morning", "Morgen"], ["Night", "Nacht"], ["Food", "Essen"]]
+      }
+    };
+  </script>
+</body>
+</html>
