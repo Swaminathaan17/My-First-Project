@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Language Learning</title>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape">🌍</div>
+      <div class="shape">📚</div>
+      <div class="shape">🗣️</div>
+      <div class="shape">✨</div>
+      <div class="shape">🎯</div>
+      <div class="shape">🌟</div>
+    </div>
+  </div>
+
+  <header>
+    <h1>Learn a New Language</h1>
+  </header>
+  <div class="toggle-container">
+    <button onclick="toggleMode()">Toggle Mode</button>
+  </div>
+  <button id="logoutBtn" onclick="logout()">Logout</button>
+  <div class="login-section" id="loginSection">
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button onclick="login()">Login</button>
+  </div>
+  <div class="container" id="mainContent" style="display:none">
+    <label for="language">Choose a Language:</label>
+    <select id="language" onchange="displayLanguage()">
+      <option value="">--Select--</option>
+      <option value="english">English</option>
+      <option value="spanish">Spanish</option>
+      <option value="french">French</option>
+      <option value="tamil">Tamil</option>
+      <option value="hindi">Hindi</option>
+      <option value="russian">Russian</option>
+      <option value="arabic">Arabic</option>
+      <option value="german">German</option>
+    </select>
+    <div id="content"></div>
+    <div class="quiz-section" id="quizSection"></div>
+    <div id="timer"></div>
+    <div id="scoreBoard">Score: 0 / 0</div>
+    <div id="celebration">🎉 Congratulations! You finished the quiz! 🎉</div>
+  </div>
+</body>
+</html>
